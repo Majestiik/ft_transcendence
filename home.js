@@ -107,11 +107,11 @@ function drawGame(){
 	ctx.drawImage(g_back_button.img, g_back_button.x, g_back_button.y);
 	ctx.font = g_back_button.font;
 	ctx.fillStyle = g_back_button.fillStyle;
-	ctx.fillText('Back', g_back_button.x + g_back_button.img.width/3.5, g_back_button.y + g_back_button.img.height / 1.3);
+	ctx.fillText('Back', g_back_button.x + g_back_button.img.width / 3.5, g_back_button.y + g_back_button.img.height / 1.3);
 
-	ctx.drawImage(paddleL.img, paddleL.x, paddleL.y);
-	ctx.drawImage(paddleR.img, paddleR.x, paddleR.y);
-	ctx.drawImage(ball.img, ball.x, ball.y);
+	ctx.drawImage(paddleL.img, paddleL.x, paddleL.y, paddleL.img.width / 1.2, paddleL.img.height / 1.2);
+	ctx.drawImage(paddleR.img, paddleR.x, paddleR.y, paddleR.img.width / 1.2, paddleR.img.height / 1.2);
+	ctx.drawImage(ball.img, ball.x, ball.y, ball.img.width / 1.2, ball.img.height / 1.2);
 
 	ctx.font = '50px Orbitron';
 	ctx.fillStyle = 'white';
@@ -125,6 +125,13 @@ function resetBall() {
 	ball.speed = 5;
 	ball.velocityX = 5;
 	ball.velocityY = 5;
+}
+
+function resetPaddles(){
+	paddleL.x = paddleL.img.width / 2;
+	paddleL.y = cvs.height / 2 - paddleL.img.height / 2;
+	paddleR.x = cvs.width - paddleR.img.width * 1.5;
+	paddleR.y = cvs.height / 2 - paddleR.img.height / 2;
 }
 
 //collision detection
@@ -150,7 +157,7 @@ function updateGame(){
 	let computerLevel = 0.1;
 	paddleR.y += (ball.y - (paddleR.y + paddleR.img.height/5)) * computerLevel;
 
-	if (ball.y + ball.img.height - 35 > cvs.height || ball.y < -35)
+	if (ball.y + ball.img.height - 35 > cvs.height || ball.y < - 35)
 	{
 		ball.velocityY = -ball.velocityY;
 	}
@@ -251,6 +258,7 @@ function checkMouseClick(evt){
 			homeOn = false;
 			gameOn = true;
 			resetBall();
+			resetPaddles();
 			paddleL.score = 0;
 			paddleR.score = 0;
 		}
