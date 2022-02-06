@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&display=swap');
+
+body {
+	background: url(./assets/images/bg_home.png) no-repeat fixed center/cover;
+	/* height: 100vh; */
+	overflow: hidden;
+	cursor: url("assets/images/cursor_little.png")50 50, auto;
+}
+
+h1 {
+	text-align: center;
+	color: #e1fcb7;
+	font-size: 4rem;
+	text-shadow: 5px 3px 0px #86f803;
+	/* font-family: 'Bebas Neue', cursive; */
+	font-family: 'Permanent Marker', cursive;
+}
+
+h2 {
+	grid-area: h2;
+	text-align: center;
+	color: #e1fcb7;
+	font-size: 3.5rem;
+	text-shadow: 5px 3px 0px #86f803;
+	/* font-family: 'Bebas Neue', cursive; */
+	font-family: 'Permanent Marker', cursive;
+}
+
+main {
+	background: rgba(0, 0, 0, 0.5);
+	color: blueviolet;
+	font-size: auto;
+	font-family: 'Permanent Marker', cursive;
+	width: 90%;
+	min-height: 500px;
+	margin: 10px auto;
+	padding: 40px;
+	border-radius: 30px;
+	box-shadow: 0 2px 12px 5px rgba(0, 0, 0, 0.253);
+	text-align:center;
+
+}
+
+#circle {
+	height: 60px;
+	width: 320px;
+	background: url(./assets/images/button.png) no-repeat center;
+	position: absolute;
+}
+
+div {
+	transition-duration: 0.2s;
+	background: url(./assets/images/button.png) no-repeat center/cover;
+	/* border-style: solid; */
+	background-size: 365px 90px;
+	width: 320px;
+	height: 60px;
+	cursor: pointer;
+	margin: 10px auto;
+	padding: 40px;
+	text-align:center;
+	color: blueviolet;
+	font-size: 200%;
+	text-shadow: 5px 3px 0px #1c011f;
+	/* font-family: 'Bebas Neue', cursive; */
+	font-family: 'Permanent Marker', cursive;
+}
+
+div:hover {
+	background: url(./assets/images/button_hovered.png) no-repeat center;
+	background-size: 365px 90px;
+	width: 320px;
+	height: 60px;
+	cursor: url("assets/images/cursor.png") 50 50, auto;
+	border: none;
+
+	color: #e1fcb7;;
+
+	text-shadow: 2px 3px 0px #86f803;
+	font-size: 190%;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-areas: 
+		'h2 h2 h2'
+		'bt1 bt2 bt3'
+		'bt4 bt5 bt6';
+}
+
+#Bt1 {
+	grid-area: bt1;
+}
+
+#Bt2 {
+	grid-area: bt2;
+}
+
+#Bt3 {
+	grid-area: bt3;
+}
+
+#Bt4 {
+	grid-area: bt4;
+}
+
+#Bt5 {
+	grid-area: bt5;
+}
+
+#Bt6 {
+	grid-area: bt6;
+}
+
+@media screen and (max-width: 1300px) {
+	.grid-container {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr;
+		grid-template-areas: 
+		'h2 h2'
+		'bt1 bt2'
+		'bt3 bt4'
+		'bt5 bt6';
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.grid-container {
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-template-areas: 
+		'h2'
+		'bt1'
+		'bt2'
+		'bt3'
+		'bt4'
+		'bt5'
+		'bt6';
+	}
+}
+
+/* * {
+	border: 2px red solid;
+} */
