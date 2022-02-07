@@ -2,18 +2,18 @@ var homeMain = document.getElementById("Home");
 var gameMain = document.getElementById("Game");
 var leaderboardMain = document.getElementById("Leaderboard");
 var matchHistoryMain = document.getElementById("Match History");
-var gameOptionsMain = document.getElementById("Game Options");
+var optionsMain = document.getElementById("Options");
 var chatMain = document.getElementById("Chat");
 var friendsMain = document.getElementById("Friends");
 
-homeClick();
+homeClick(null);
 
 function disable_all_main() {
 	homeMain.style.display = "none";
 	gameMain.style.display = "none";
 	leaderboardMain.style.display = "none";
 	matchHistoryMain.style.display = "none";
-	gameOptionsMain.style.display = "none";
+	optionsMain.style.display = "none";
 	chatMain.style.display = "none";
 	friendsMain.style.display = "none";
 }
@@ -38,9 +38,9 @@ function matchHistoryClick(evt) {
 	matchHistoryMain.style.removeProperty("display");
 }
 
-function gameOptionsClick(evt) {
+function optionsClick(evt) {
 	disable_all_main();
-	gameOptionsMain.style.removeProperty("display");
+	optionsMain.style.removeProperty("display");
 }
 
 function chatClick(evt) {
