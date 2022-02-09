@@ -22,7 +22,7 @@ const Friends = () => {
 	const addFriend = () => {
 		var find = false;
 		var client;
-		newsDataClients.forEach(element => (inputName && (element.name.toUpperCase() == inputName.toUpperCase())) ? ((client = element) && (find = true)) : (null));
+		newsDataClients.forEach(element => (inputName && (element.name.toUpperCase() === inputName.toUpperCase())) ? ((client = element) && (find = true)) : (null));
 		if (find)
 		{
 			axios.post('http://localhost:3003/friends', client);
@@ -30,6 +30,18 @@ const Friends = () => {
 		}
 		else
 			alert("Not Found !");
+	};
+
+	const updateFriend = () => {
+		//newsDataFriends.forEach(elem1 => ((newsDataClients.forEach(elem2 => ())) elem1.id === elem2.id) ?)
+		newsDataFriends.forEach(elem1 => {// pick row n from A
+			newsDataClients.forEach(elem2 => {// run trough B
+				if (elem1.name === elem2.name) { // business logic
+					axios.put('http://localhost:3003/friends/' + elem1.id, {name: elem2.name, avatar: elem2.avatar, level: elem2.level, online: elem2.online, ingame: elem2.ingame});
+				}
+			});
+		});
+		getData('http://localhost:3003/friends', setNewsDataFriends);
 	};
 
 	const handleInput = (input) => {
@@ -43,6 +55,7 @@ const Friends = () => {
 				Add Friend :
 				<input onChange={(e) => handleInput(e.target.value)} placeholder='type name'></input>
 				<button type='submit' onClick={addFriend}>add</button>
+				<button type='submit' onClick={updateFriend}>f5</button>
 			</div>
 			<ul className='friendsList'>
 				{newsDataFriends.map((friendCard) => 

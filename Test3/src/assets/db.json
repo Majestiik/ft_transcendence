@@ -1,62 +1,30 @@
 {
   "friends": [
     {
-      "name": "Leickmay",
+      "name": "l",
       "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 5,
-      "online": true,
-      "ingame": false,
-      "id": 1
-    },
-    {
-      "name": "Simon",
-      "avatar": "http://localhost:3000/assets/avatars/avatar2.png",
-      "level": 2,
+      "level": 0,
       "online": false,
       "ingame": false,
       "id": 2
-    },
-    {
-      "name": "Jordan",
-      "avatar": "http://localhost:3000/assets/avatars/avatar3.png",
-      "level": 1,
-      "online": true,
-      "ingame": true,
-      "id": 3
     }
   ],
   "clients": [
     {
-      "name": "Leickmay",
+      "name": "Majestiik",
       "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 5,
+      "level": 0,
       "online": true,
       "ingame": false,
       "id": 1
     },
     {
-      "name": "Simon",
-      "avatar": "http://localhost:3000/assets/avatars/avatar2.png",
-      "level": 2,
+      "name": "l",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
       "online": false,
       "ingame": false,
       "id": 2
-    },
-    {
-      "name": "Jordan",
-      "avatar": "http://localhost:3000/assets/avatars/avatar3.png",
-      "level": 1,
-      "online": true,
-      "ingame": true,
-      "id": 3
-    },
-    {
-      "name": "Logan",
-      "avatar": "http://localhost:3000/assets/avatars/avatar4.png",
-      "level": 10,
-      "online": true,
-      "ingame": false,
-      "id": 4
     }
   ]
 }

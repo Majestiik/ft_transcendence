@@ -6,5 +6,6 @@ export default createContext({
     level: 0,
     online: false,
     ingame: false,
+	id: 0,
 	updateUser: (user) => {}
 });
