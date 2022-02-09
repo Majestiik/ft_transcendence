@@ -1,0 +1,31 @@
+.navigation {
+	margin: 0px 0px 100px 0px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	a {
+		margin: 10px;
+		padding: 10px;
+		position: relative;
+	}
+
+	a:hover {
+		text-shadow: 5px 3px 0px #8900b3;
+		color: #ff25e2;
+	}
+
+	.nav-active {
+		&::after {
+			content: '';
+			width: 85%;
+			height: 5px;
+			background: $color-1;
+			position: absolute;
+			bottom: 1px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+}
