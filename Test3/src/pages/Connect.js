@@ -18,13 +18,23 @@ const Connect = () => {
 	};
 
 	const checkExist = (name) => {
-		//getData('http://localhost:3003/clients', setNewsDataClients);
 		var find = false;
 		var client;
 		newsDataClients.forEach(element => (element && name && (element.name.toUpperCase() === name.toUpperCase())) ? ((client = element) && (find = true)) : (null));
 		if (find)
 		{
 			console.log("Find !");
+			return client;
+		}
+	};
+
+	const getUserInData = (name, data) => {
+		var find = false;
+		var client;
+		data.forEach(element => (element && name && (element.name.toUpperCase() === name.toUpperCase())) ? ((client = element) && (find = true)) : (null));
+		if (find)
+		{
+			console.log("Find in Data!");
 			return client;
 		}
 	};
@@ -44,18 +54,16 @@ const Connect = () => {
 				online: true,
 				ingame: false,
 				id: 0
-			});
-			client = checkExist(inputName);
-			contextValue.updateUser(client);
-			//axios.post('http://localhost:3003/clients', contextValue);
+			})
+			.then(() => axios.get('http://localhost:3003/clients'))
+			.then((res) => client = getUserInData(inputName, res.data))
+			.then(() => contextValue.updateUser(client));
 			
 		}
 		else if (inputName && client)
 		{
 			axios.put('http://localhost:3003/clients/' + client.id, {name: client.name, avatar: client.avatar, level: client.level, online: true, ingame: client.ingame});
 			contextValue.updateUser(client);
-			//console.log(contextValue);
-			//axios.post('http://localhost:3003/clients', client);
 		}
 	};
 

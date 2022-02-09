@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import Navigation from '../components/Navigation';
-import UserContext from '../components/UserContext';
+//import UserContext from '../components/UserContext';
 
 const Game = () => {
 	return (

@@ -9,12 +9,15 @@ const Friends = () => {
 	const [newsDataFriends, setNewsDataFriends] = useState([]);
 	const [newsDataClients, setNewsDataClients] = useState([]);
 	var inputName;
+	var data = [];
 
+	
 	useEffect(() => {
 		getData('http://localhost:3003/friends', setNewsDataFriends);
 		getData('http://localhost:3003/clients', setNewsDataClients);
+		axios.get('http://localhost:3003/friends').then((ret) => data = ret.data);
 	}, []);
-
+	
 	const getData = (url, setNewsData) => {
 		axios.get(url).then((res) => setNewsData(res.data));
 	};
@@ -33,10 +36,9 @@ const Friends = () => {
 	};
 
 	const updateFriend = () => {
-		//newsDataFriends.forEach(elem1 => ((newsDataClients.forEach(elem2 => ())) elem1.id === elem2.id) ?)
-		newsDataFriends.forEach(elem1 => {// pick row n from A
-			newsDataClients.forEach(elem2 => {// run trough B
-				if (elem1.name === elem2.name) { // business logic
+		newsDataFriends.forEach(elem1 => {
+			newsDataClients.forEach(elem2 => {
+				if (elem1.name === elem2.name) {
 					axios.put('http://localhost:3003/friends/' + elem1.id, {name: elem2.name, avatar: elem2.avatar, level: elem2.level, online: elem2.online, ingame: elem2.ingame});
 				}
 			});
@@ -58,6 +60,7 @@ const Friends = () => {
 				<button type='submit' onClick={updateFriend}>f5</button>
 			</div>
 			<ul className='friendsList'>
+				{data.map((ret) => ret.name)}
 				{newsDataFriends.map((friendCard) => 
 				(<FriendCard key={friendCard.id} friendCard={friendCard} />))}
 			</ul>

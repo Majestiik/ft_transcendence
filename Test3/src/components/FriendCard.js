@@ -11,11 +11,11 @@ const FriendCard = ({ friendCard }) => {
 	return (
 		<div className='friendCard'>
 			<div className='friendCardUp'>
-				<img src={onlineSrc} width="40" height="40"></img>
-				<img className='spec' src={ingameSrc} width="40" height="40"></img>
+				<img src={onlineSrc} width="40" height="40" alt=""></img>
+				<img className='spec' src={ingameSrc} width="40" height="40" alt=""></img>
 			</div>
 			<div className='friendCardDown'>
-				<img src={friendCard.avatar} width="100" height="100" align="bottom"></img>
+				<img src={friendCard.avatar} width="100" height="100" align="bottom" alt=""></img>
 				<div> {friendCard.name}</div>
 				<div> lvl {friendCard.level}</div>
 			</div>

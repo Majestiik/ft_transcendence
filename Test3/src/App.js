@@ -37,7 +37,8 @@ const App = () => {
 	});
 
 	window.addEventListener("unload", (ev) => {
-		//console.log(contextValue);
+		ev.preventDefault();
+		console.log(contextValue);
 		//contextValue.updateUser({name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame});
 		axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame});
 	});
