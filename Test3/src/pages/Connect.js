@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import UserContext from '../components/UserContext';
 import axios from 'axios';
 
@@ -6,26 +6,19 @@ const Connect = () => {
 
 	const contextValue = useContext(UserContext);
 	var inputName;
-	const [newsDataClients, setNewsDataClients] = useState([]);
-
 
 	useEffect(() => {
-			getData('http://localhost:3003/clients', setNewsDataClients);
+		console.log("Update in Connect...");
+		axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateClientsData(ret.data));
+		window.addEventListener("beforeunload", function() {axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData})});
 	}, []);
-
-	const getData = (url, setNewsData) => {
-		axios.get(url).then((res) => setNewsData(res.data));
-	};
 
 	const checkExist = (name) => {
 		var find = false;
 		var client;
-		newsDataClients.forEach(element => (element && name && (element.name.toUpperCase() === name.toUpperCase())) ? ((client = element) && (find = true)) : (null));
+		contextValue.clientsData.forEach(element => (element && name && (element.name.toUpperCase() === name.toUpperCase())) ? ((client = element) && (find = true)) : (null));
 		if (find)
-		{
-			console.log("Find !");
 			return client;
-		}
 	};
 
 	const getUserInData = (name, data) => {
@@ -33,10 +26,7 @@ const Connect = () => {
 		var client;
 		data.forEach(element => (element && name && (element.name.toUpperCase() === name.toUpperCase())) ? ((client = element) && (find = true)) : (null));
 		if (find)
-		{
-			console.log("Find in Data!");
 			return client;
-		}
 	};
 	
 	const handleInput = (input) => {
@@ -53,24 +43,25 @@ const Connect = () => {
 				level: 0,
 				online: true,
 				ingame: false,
+				friends: [],
 				id: 0
 			})
 			.then(() => axios.get('http://localhost:3003/clients'))
 			.then((res) => client = getUserInData(inputName, res.data))
 			.then(() => contextValue.updateUser(client));
-			
 		}
 		else if (inputName && client)
 		{
-			axios.put('http://localhost:3003/clients/' + client.id, {name: client.name, avatar: client.avatar, level: client.level, online: true, ingame: client.ingame});
+			axios.put('http://localhost:3003/clients/' + client.id, {name: client.name, avatar: client.avatar, level: client.level, online: true, ingame: client.ingame, friends: client.friends});
 			contextValue.updateUser(client);
+			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateFriendsData(ret.data))
 		}
 	};
 
 	return (
 		<div className='connect'>
 				Type your Name :
-				<input onChange={(e) => handleInput(e.target.value)} placeholder='type your name'></input>
+				<input onChange={(e) => handleInput(e.target.value)} placeholder='yes here ...'></input>
 				<button type='submit' onClick={setUser}>confirm</button>
 		</div>
 	);

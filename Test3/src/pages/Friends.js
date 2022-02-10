@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Navigation from '../components/Navigation';
 import axios from 'axios';
 import FriendCard from '../components/FriendCard';
@@ -6,45 +6,35 @@ import UserContext from '../components/UserContext';
 
 const Friends = () => {
 	
-	const [newsDataFriends, setNewsDataFriends] = useState([]);
-	const [newsDataClients, setNewsDataClients] = useState([]);
+	const contextValue = useContext(UserContext);
+	const [shouldUpdate, setShouldUpdate] = useState(true);
 	var inputName;
-	var data = [];
 
 	
 	useEffect(() => {
-		getData('http://localhost:3003/friends', setNewsDataFriends);
-		getData('http://localhost:3003/clients', setNewsDataClients);
-		axios.get('http://localhost:3003/friends').then((ret) => data = ret.data);
-	}, []);
-	
-	const getData = (url, setNewsData) => {
-		axios.get(url).then((res) => setNewsData(res.data));
-	};
+		if (shouldUpdate)
+		{
+			console.log("Update in Friends...");
+			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateClientsData(ret.data));
+			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateFriendsData(ret.data));
+			window.addEventListener("beforeunload", function() {axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData})});
+			setShouldUpdate(!shouldUpdate);
+		}
+	}, [shouldUpdate]);
 
 	const addFriend = () => {
 		var find = false;
 		var client;
-		newsDataClients.forEach(element => (inputName && (element.name.toUpperCase() === inputName.toUpperCase())) ? ((client = element) && (find = true)) : (null));
+		contextValue.clientsData.forEach(element => (inputName && (element.name.toUpperCase() === inputName.toUpperCase())) ? ((client = element) && (find = true)) : (null));
 		if (find)
 		{
-			axios.post('http://localhost:3003/friends', client);
-			getData('http://localhost:3003/friends', setNewsDataFriends);
+			contextValue.friendsData.push(client.name);
+			axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: contextValue.online, ingame: contextValue.ingame, friends: contextValue.friendsData});
 		}
 		else
 			alert("Not Found !");
 	};
 
-	const updateFriend = () => {
-		newsDataFriends.forEach(elem1 => {
-			newsDataClients.forEach(elem2 => {
-				if (elem1.name === elem2.name) {
-					axios.put('http://localhost:3003/friends/' + elem1.id, {name: elem2.name, avatar: elem2.avatar, level: elem2.level, online: elem2.online, ingame: elem2.ingame});
-				}
-			});
-		});
-		getData('http://localhost:3003/friends', setNewsDataFriends);
-	};
 
 	const handleInput = (input) => {
 		inputName = input;
@@ -52,17 +42,18 @@ const Friends = () => {
 
 	return (
 		<div className="friends">
-			<Navigation />
+			<Navigation userCard={contextValue}/>
+			<div>{contextValue.data}</div>
 			<div className='friendsSearch'>
 				Add Friend :
 				<input onChange={(e) => handleInput(e.target.value)} placeholder='type name'></input>
-				<button type='submit' onClick={addFriend}>add</button>
-				<button type='submit' onClick={updateFriend}>f5</button>
+				<button type='submit' onClick={() => {setShouldUpdate(!shouldUpdate); addFriend();}}>add</button>
+				<button type='submit' onClick={() => setShouldUpdate(!shouldUpdate)}>f5</button>
 			</div>
 			<ul className='friendsList'>
-				{data.map((ret) => ret.name)}
-				{newsDataFriends.map((friendCard) => 
-				(<FriendCard key={friendCard.id} friendCard={friendCard} />))}
+				{contextValue.clientsData.map((friendCard) => {
+					if (contextValue.friendsData.indexOf(friendCard.name) > -1)
+						return <FriendCard key={friendCard.id} friendCard={friendCard} />})}
 			</ul>
 		</div>
 	);

@@ -7,5 +7,9 @@ export default createContext({
     online: false,
     ingame: false,
 	id: 0,
-	updateUser: (user) => {}
+	friendsData: [],
+	clientsData: [],
+	updateUser: (user) => {},
+	updateFriendsData: (data) => {},
+	updateClientsData: (data) => {}
 });

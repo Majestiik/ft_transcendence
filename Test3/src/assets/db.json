@@ -1,46 +1,90 @@
 {
-  "friends": [
-    {
-      "name": "Majestiik",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": false,
-      "ingame": false,
-      "id": 1
-    },
-    {
-      "name": "Leickmay",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": true,
-      "ingame": false,
-      "id": 2
-    }
-  ],
   "clients": [
-    {
-      "name": "Majestiik",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": false,
-      "ingame": false,
-      "id": 1
-    },
-    {
-      "name": "Leickmay",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": true,
-      "ingame": false,
-      "id": 2
-    },
     {
       "name": "666",
       "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 10,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 1
+    },
+    {
+      "name": "Leickmay",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [
+        "666",
+        "Jordan",
+        "Swiin_Ice",
+        "testeur",
+        "8"
+      ],
+      "id": 2
+    },
+    {
+      "name": "Jordan",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [
+        "666"
+      ],
+      "id": 3
+    },
+    {
+      "name": "Swiin_Ice",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [
+        "666"
+      ],
+      "id": 4
+    },
+    {
+      "name": "testeur",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 5
+    },
+    {
+      "name": "8",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [
+        "666",
+        "Leickmay",
+        "Jordan"
+      ],
+      "id": 6
+    },
+    {
+      "name": "TuFaisTropLeFou",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
       "level": 0,
       "online": true,
       "ingame": false,
-      "id": 3
+      "friends": [],
+      "id": 7
+    },
+    {
+      "name": "12345678910",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 8
     }
   ]
 }

@@ -11,7 +11,7 @@ $white: rgb(243, 243, 243);
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	cursor: url("/assets/img/cursor.png")50 50, auto;
+	cursor: url("/assets/img/cursor.png")32 32, auto;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
   font-size: 2.5rem;
   text-shadow: 5px 3px 0px #8900b3;
   color: $color-3;
-  background: url(/assets/img/bg_home.png) no-repeat fixed center/cover;
+  background: url(/assets/img/bg_home.png) fixed center/contain;
   animation: 30s linear 1s infinite alternate slidein;
 }
 
@@ -37,7 +37,7 @@ li {
 a {
 	text-decoration: none;
 	color: $color-3;
-	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
+	cursor: url("/assets/img/cursor_little_pink.png")32 32, auto;
 }
 
 a:visited {
@@ -48,14 +48,14 @@ button {
 	font-family: $font-1;
 	font-size: 1.5rem;
 	color: $color-1;
-	background: url("/assets/img/bg_friendCard.png")  no-repeat center/cover;
+	background: url("/assets/img/bg_friendCard.png") no-repeat center/cover;
 	border: none;
 }
 
 button:hover {
 	text-shadow: none;
 	color: #ff25e2;
-	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
+	cursor: url("/assets/img/cursor_little_pink.png")32 32, auto;
 }
 
 input {
@@ -67,9 +67,9 @@ input {
 }
 
 input:hover {
-	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
+	cursor: url("/assets/img/cursor_little_pink.png")32 32, auto;
 }
 
 .spec:hover {
-	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
+	cursor: url("/assets/img/cursor_little_pink.png")32 32, auto;
 }
