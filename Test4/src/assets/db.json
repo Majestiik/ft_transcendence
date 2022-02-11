@@ -2,10 +2,10 @@
   "clients": [
     {
       "name": "666",
-      "avatar": "http://localhost:3000/assets/avatars/avatar2.png",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
       "level": 10,
-      "online": true,
-      "ingame": true,
+      "online": false,
+      "ingame": false,
       "friends": [],
       "id": 1
     },
@@ -13,15 +13,14 @@
       "name": "Leickmay",
       "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
       "level": 0,
-      "online": true,
+      "online": false,
       "ingame": false,
       "friends": [
         "666",
         "Jordan",
         "Swiin_Ice",
         "testeur",
-        "8",
-        "Majestiik"
+        "8"
       ],
       "id": 2
     },
@@ -86,24 +85,6 @@
       "ingame": false,
       "friends": [],
       "id": 8
-    },
-    {
-      "name": "Majestiik",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": false,
-      "ingame": false,
-      "friends": [],
-      "id": 9
-    },
-    {
-      "name": "Majestiik",
-      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
-      "level": 0,
-      "online": false,
-      "ingame": false,
-      "friends": [],
-      "id": 10
     }
   ]
 }

@@ -12,35 +12,6 @@ import Statisitcs from './pages/Statistics';
 import UserContext from './components/UserContext';
 
 const App = () => {
-	/*const [shouldUpdate, setShouldUpdate] = useState(true);
-
-	const handleCloseTab = (e) => {
-		e.preventDefault();
-		e.returnValue = "";
-		if (shouldUpdate)
-		{
-			axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData});
-			setShouldUpdate(!shouldUpdate);
-		}
-
-	};
-
-	const handleBeforeCloseTab = (e) => {
-		if (shouldUpdate)
-		{
-			console.log("handlesave !");
-			axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData});
-			setShouldUpdate(!shouldUpdate);
-		}		
-		e.preventDefault();
-		e.returnValue = "";
-	};
-
-	useEffect(() => {
-		console.log("Update in App...");
-		window.addEventListener("unload", handleCloseTab);
-		window.addEventListener("beforeunload", handleBeforeCloseTab);
-	  }, [handleBeforeCloseTab]);*/
 
 	const [user, setUser] = useState({
 		name: "",
@@ -73,19 +44,6 @@ const App = () => {
 		updateFriendsData: findFriendsData,
 		updateClientsData: setClientsData
 	};
-
-	/*window.addEventListener("beforeunload", (ev) => {  
-	    ev.preventDefault();
-		console.log(contextValue);
-	    return ev.returnValue = 'Are you sure you want to close?';
-	});
-
-	window.addEventListener("unload", (ev) => {
-		axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData});
-		//console.log(contextValue);
-		//contextValue.updateUser({name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame});
-	});*/
-
 
 	if (user.name !== "")
 		return (
