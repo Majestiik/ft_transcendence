@@ -10,49 +10,32 @@ import NotFound from './pages/NotFound';
 import Options from './pages/Options';
 import Statisitcs from './pages/Statistics';
 import UserContext from './assets/components/UserContext';
+import User from './assets/components/Interface';
 // axio.patch
 //check les interfaces
 function App() {
-
-	interface Test {
-		key: string
-		name: string
-	}
-
+	
 	const [shouldLog, setShouldLog] = useState(true);
-
-	const [user, setUser] = useState({
+	
+	const [userList, setUserList] = useState<Array<User>>([]);
+	const [user, setUser] = useState<User>({
 		name: "",
 		avatar: "",
 		level: 0,
 		online: false,
 		ingame: false,
+		friends: [],
 		id: 0
 	});
-
-	const [friendsDt, setFriendsData] = useState([]);
-	const [clientsDt, setClientsData] = useState([]);
-
-	const findFriendsData = (data: (string | number | boolean | [])) => {
-		let myVar: Test;
-		for (const [key, value] of Object.entries(data)) {
-			if (Object.entries(value).at(0)?.at(1) === "666")
-			{
-				console.log("entries");
-				console.log(value);
-				Object.entries(value).map(function(key: Test)
-				{
-					console.log("value");
-					if (key[0] === "friends")
-						key.map(function(key){
-							if (key != "friends")
-								myVar = key[1];
-						});
-				});	
-			}
-				//setFriendsData(Object.entries(value).at(5)?.at(1));
-	}};
-
+	
+	const [friendsDt, setFriendsData] = useState<Array<any>>([]);
+	
+	const findFriendsData = (data: (any[])) => {
+		data.forEach(element => {	
+			if(element.name === userContext.name)
+				setFriendsData(element.friends)});
+	};
+	
 	const userContext = {
 		name: user.name,
     	avatar: user.avatar,
@@ -61,40 +44,63 @@ function App() {
     	ingame: user.ingame,
 		id: user.id,
 		friendsData: friendsDt,
-		clientsData: clientsDt,
+		clientsData: userList,
 		updateUser: setUser,
 		updateFriendsData: findFriendsData,
-		updateClientsData: setClientsData
+		updateClientsData: setUserList
 	};
 
 	useEffect(() => {
 		if (shouldLog)
 		{
-			console.log("Update in Home ...");
-			axios.get('http://localhost:3003/clients').then((ret) => findFriendsData(ret.data));
-
-			setShouldLog(!shouldLog);
+			console.log("Update in App ...");
+			/*const userArray:Array<User> = [];
+			axios.get('http://localhost:3003/clients')
+			.then(response => {	
+			response.data.forEach((item:any)=>{
+				userArray.push({
+					name: item.name,
+					avatar: item.avatar,
+					level: item.level,
+					online: item.online,
+					ingame: item.ingame,
+					id: item.id,
+					friends: item.friends
+				})
+			})
+			setUserList(userArray);
+		}).then(() => console.log(userArray));
+			setShouldLog(!shouldLog);*/
 		}
 	}, [shouldLog]);
-	/*const findFriendsData = (data: (string | number | boolean)[]) => {
-		data.forEach(element => {	
-			if(element.name === contextValue.name)
-				setFriendsData(element.friends)});
-	};*/
 
-  return (
-		<BrowserRouter>
-			<Switch>
-				<Route path="/" exact component={Home} />
-				<Route path="/friends" exact component={Friends} />
-				<Route path="/game" exact component={Game} />
-				<Route path="/history" exact component={History} />
-				<Route path="/statistics" exact component={Statisitcs} />
-				<Route path="/options" exact component={Options} />
-				<Route component={NotFound} />
-			</Switch>
-		</BrowserRouter>
-  );
+	if (user.name !== "")
+		return (
+			<BrowserRouter>
+				<UserContext.Provider value={userContext}>
+					<Switch>
+						<Route path="/" exact component={Home} />
+						<Route path="/friends" exact component={Friends} />
+						<Route path="/game" exact component={Game} />
+						<Route path="/history" exact component={History} />
+						<Route path="/statistics" exact component={Statisitcs} />
+						<Route path="/options" exact component={Options} />
+						<Route component={NotFound} />
+					</Switch>
+				</UserContext.Provider>
+			</BrowserRouter>
+		);
+	else
+		return (
+			<BrowserRouter>
+				<UserContext.Provider value={userContext}>
+					<Switch>
+						<Route path="/" exact component={Connect} />
+						<Route component={NotFound} />
+					</Switch>
+				</UserContext.Provider>
+			</BrowserRouter>
+		);	
 }
 
 export default App;

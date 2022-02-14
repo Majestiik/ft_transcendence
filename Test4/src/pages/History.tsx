@@ -4,7 +4,7 @@ import Navigation from '../assets/components/Navigation';
 const History = () => {
 	return (
 		<div>
-			<Navigation />
+			<Navigation/>
 		</div>
 	);
 };

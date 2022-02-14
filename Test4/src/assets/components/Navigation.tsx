@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import UserCard from "./UserCard";
 
-const Navigation = () => {
+const Navigation = ( {userCard}: any ) => {
 	return (
 		<div className="navigation">
+			<UserCard userCard={userCard}/>
 			<div className="navBar">
 				<NavLink exact to="/" activeClassName="nav-active">Home</NavLink>
 				<NavLink exact to="/game" activeClassName="nav-active">Game</NavLink>

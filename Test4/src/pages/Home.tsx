@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Navigation from '../assets/components/Navigation';
+import UserContext from '../assets/components/UserContext';
 
 const Home = () => {
-	const [shouldLog, setShouldLog] = useState(true);
-	//var user;
-
+	const contextValue = useContext(UserContext);
+	const [shouldUpdate, setShouldUpdate] = useState(true);
+	
 	useEffect(() => {
-		if (shouldLog)
+		if (shouldUpdate)
 		{
-			console.log("Update in Home ...");
-			/*axios.get('http://localhost:3003/clients').then((ret) => {ret.data.forEach(function (element: [string, number, boolean, []]) {
-				console.log(Object.entries(element).at(0)?.at(1));}
-			);});*/
-
-			setShouldLog(!shouldLog);
+			console.log("Update in Home...");
+			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateClientsData(ret.data));
+			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateFriendsData(ret.data));
+			window.addEventListener("beforeunload", function() {axios.put('http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData})});
+			setShouldUpdate(!shouldUpdate);
 		}
-	}, [shouldLog]);
+	}, [shouldUpdate]);
 	return (
 		<div className="home">
-			<Navigation />
+			<Navigation userCard={contextValue} />
 		</div>
 	);
 };

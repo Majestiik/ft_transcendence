@@ -1,4 +1,8 @@
 import { createContext } from 'react';
+//import User from './assets/components/Interface';
+
+const fdat: any[] = [];
+const cdat: any[] = [];
 
 export default createContext({
 	name: "",
@@ -7,9 +11,9 @@ export default createContext({
     online: false,
     ingame: false,
 	id: 0,
-	friendsData: [],
-	clientsData: [],
-	updateUser: (data: (string | number | boolean | [])) => {},
-	updateFriendsData: (data: (string | number | boolean | [])) => {},
-	updateClientsData: (data: (string | number | boolean | [])) => {}
+	friendsData: fdat,
+	clientsData: cdat,
+	updateUser: (data: (any | any[])) => {},
+	updateFriendsData: (data: (any| any[])) => {},
+	updateClientsData: (data: (any| any[])) => {}
 });

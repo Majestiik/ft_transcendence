@@ -6,7 +6,9 @@
       "level": 10,
       "online": false,
       "ingame": false,
-      "friends": [],
+      "friends": [
+        "Leickmay"
+      ],
       "id": 1
     },
     {
@@ -16,11 +18,7 @@
       "online": false,
       "ingame": false,
       "friends": [
-        "666",
-        "Jordan",
-        "Swiin_Ice",
-        "testeur",
-        "8"
+        "Jordan"
       ],
       "id": 2
     },
@@ -85,6 +83,15 @@
       "ingame": false,
       "friends": [],
       "id": 8
+    },
+    {
+      "name": "Majestiik",
+      "avatar": "http://localhost:3000/assets/avatars/avatar1.png",
+      "level": 0,
+      "online": true,
+      "ingame": false,
+      "friends": [],
+      "id": 9
     }
   ]
 }
