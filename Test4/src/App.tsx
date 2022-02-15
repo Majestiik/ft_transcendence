@@ -18,6 +18,7 @@ function App() {
 	const [shouldLog, setShouldLog] = useState(true);
 	
 	const [userList, setUserList] = useState<Array<User>>([]);
+	const [friendsList, setFriendsList] = useState<Array<any>>([]);
 	const [user, setUser] = useState<User>({
 		name: "",
 		avatar: "",
@@ -28,12 +29,10 @@ function App() {
 		id: 0
 	});
 	
-	const [friendsDt, setFriendsData] = useState<Array<any>>([]);
-	
-	const findFriendsData = (data: (any[])) => {
+	const findFriendsList = (data: (any[])) => {
 		data.forEach(element => {	
 			if(element.name === userContext.name)
-				setFriendsData(element.friends)});
+				setFriendsList(element.friends)});
 	};
 	
 	const userContext = {
@@ -43,10 +42,10 @@ function App() {
     	online: user.online,
     	ingame: user.ingame,
 		id: user.id,
-		friendsData: friendsDt,
+		friendsData: friendsList,
 		clientsData: userList,
 		updateUser: setUser,
-		updateFriendsData: findFriendsData,
+		updateFriendsData: findFriendsList,
 		updateClientsData: setUserList
 	};
 
@@ -54,23 +53,6 @@ function App() {
 		if (shouldLog)
 		{
 			console.log("Update in App ...");
-			/*const userArray:Array<User> = [];
-			axios.get('http://localhost:3003/clients')
-			.then(response => {	
-			response.data.forEach((item:any)=>{
-				userArray.push({
-					name: item.name,
-					avatar: item.avatar,
-					level: item.level,
-					online: item.online,
-					ingame: item.ingame,
-					id: item.id,
-					friends: item.friends
-				})
-			})
-			setUserList(userArray);
-		}).then(() => console.log(userArray));
-			setShouldLog(!shouldLog);*/
 		}
 	}, [shouldLog]);
 

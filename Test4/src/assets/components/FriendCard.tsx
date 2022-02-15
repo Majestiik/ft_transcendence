@@ -5,8 +5,8 @@ const FriendCard = ({ friendCard }:any) => {
 	var onlineSrc;
 	var ingameSrc;
 
-	friendCard.online ? (onlineSrc = "http://localhost:3000/assets/images/online.png") : (onlineSrc = "http://localhost:3000/assets/images/offline.png");
-	friendCard.ingame ? (ingameSrc = "http://localhost:3000/assets/images/ingame.png") : (ingameSrc = "http://localhost:3000/assets/images/outgame.png");
+	friendCard.online ? (onlineSrc = "./assets/images/online.png") : (onlineSrc = "./assets/images/offline.png");
+	friendCard.ingame ? (ingameSrc = "./assets/images/ingame.png") : (ingameSrc = "./assets/images/outgame.png");
 
 	return (
 		<div className='friendCard'>
