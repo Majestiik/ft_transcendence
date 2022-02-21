@@ -8,9 +8,6 @@ export class AppController {
 
   @Get()
   getHello(): any {
-	var ret: Array <any>;
-	axios.get('http://localhost:3003/clients').then((res: any) => {ret = res.data; console.log(ret)}).then(() => {return ret});
-	//return ret;
-	//return this.appService.getHello();
+	return this.appService.getHello();
   }
 }

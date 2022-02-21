@@ -188,6 +188,15 @@
         "simon"
       ],
       "id": 16
+    },
+    {
+      "name": "6662",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": true,
+      "ingame": false,
+      "friends": [],
+      "id": 17
     }
   ]
 }

@@ -12,14 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const axios_1 = require("axios");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
     getHello() {
-        var ret;
-        axios_1.default.get('http://localhost:3003/clients').then((res) => { ret = res.data; console.log(ret); }).then(() => { return ret; });
+        return this.appService.getHello();
     }
 };
 __decorate([

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useHistory ,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from '../assets/components/Navigation';
 import UserContext from '../assets/components/UserContext';
@@ -6,6 +7,11 @@ import UserContext from '../assets/components/UserContext';
 const Home = () => {
 	const contextValue = useContext(UserContext);
 	const [shouldUpdate, setShouldUpdate] = useState(true);
+	var inputName: string = "";
+	var baseURL: string = "http://localhost:3001/";
+
+	const location = useLocation()
+	const history = useHistory()
 	
 	useEffect(() => {
 		if (shouldUpdate)
@@ -18,14 +24,29 @@ const Home = () => {
 		}
 	}, [shouldUpdate]);
 
-	const test = () => {
-		axios.get('http://localhost:3001/').then((ret) => console.log(ret));
+	const handleInput = (input: string) => {
+		inputName = input;
+	};
+
+	async function test (which: number) {
+
+		console.log("location : " + location.pathname);
+		console.log("pathname : " + history.location.pathname);
+		console.log("window href : " + window.location.href.split(':', 2));
+		if (which === 1)
+		{
+			axios.get(baseURL + 'clients/all', {headers: {name: 'lol', token: 'love'}}).then((ret) => console.log(ret.data));
+		}
+		else if (which === 2)
+			axios.get(baseURL + 'clients/one/' + inputName).then((ret) => console.log(ret.data));
 	};
 
 	return (
 		<div className="home">
 			<Navigation userCard={contextValue} />
-			<button type='submit' onClick={() => {test()}}>test</button>
+			<input onChange={(e) => handleInput(e.target.value)} placeholder='type client name'></input>
+			<button type='submit' onClick={() => {test(2)}}>get One Client</button>
+			<button type='submit' onClick={() => {test(1)}}>get All Clients</button>
 		</div>
 	);
 };
