@@ -16,15 +16,6 @@
 		font-size: 1.3rem;;
 	}
 
-	button:hover {
-		animation: 0.5s linear infinite alternate rotate;
-	}
-
-	@keyframes rotate {
-		from { width: 120px; height: 120px; font-size: 1.3rem;; }
-		to   { width: 130px; height: 130px; font-size: 1.4rem;; }
-	  }
-
 	input {
 		width: 400px;
 		height: 80px;

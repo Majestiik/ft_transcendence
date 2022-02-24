@@ -1,7 +1,11 @@
 @import "./settings";
-@import "./pages/friends";
-@import "./pages/home";
 @import "./pages/connect";
+@import "./pages/friends";
+@import "./pages/game";
+@import "./pages/home";
+@import "./pages/options";
+@import "./pages/statistics";
 @import "./components/navigation";
 @import "./components/friendCard";
-@import "./components/UserCard";
+@import "./components/userCard";
+@import "./components/popup";

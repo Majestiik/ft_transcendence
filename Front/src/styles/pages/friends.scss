@@ -7,7 +7,7 @@
 		background: rgba(0, 0, 0, 0.541);
 		border-radius: 10%;
 		border: 2px solid $color-1;
-		margin: 50px 20%;
+		margin: 30px 20%;
 		padding: 20px 0px 20px 0px;
 		align-items: center;
 		font-family: $font-1;
@@ -31,6 +31,10 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-evenly;
+
+		.trash {
+			cursor: url("/assets/img/cursor_little_pink.png")32 32, auto;
+		}
 	}
 
 }

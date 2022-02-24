@@ -1,28 +1,24 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory ,useLocation } from 'react-router-dom';
-import axios from 'axios';
-import Navigation from '../assets/components/Navigation';
-import UserContext from '../assets/components/UserContext';
+//import { useHistory ,useLocation } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers, updateUser } from '../redux/actions/users.actions';
+import { useEffect } from 'react';
 
 const Home = () => {
-	const contextValue = useContext(UserContext);
-	const [shouldUpdate, setShouldUpdate] = useState(true);
-	var inputName: string = "";
-	var baseURL: string = "http://localhost:3001/";
+	const dispatch = useDispatch();
+	const user = useSelector((state: any) => state.userReducer);
+	//const users = useSelector((state: any) => state.usersReducer);
 
-	const location = useLocation()
-	const history = useHistory()
-	
+	var inputName: string = "";
+
+	//const location = useLocation()
+	//const history = useHistory()
+
 	useEffect(() => {
-		if (shouldUpdate)
-		{
-			console.log("Update in Home...");
-			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateClientsData(ret.data));
-			axios.get('http://localhost:3003/clients').then((ret) => contextValue.updateFriendsData(ret.data));
-			window.addEventListener("beforeunload", function() {axios.put('http://http://localhost:3003/clients/' + contextValue.id, {name: contextValue.name, avatar: contextValue.avatar, level: contextValue.level, online: false, ingame: contextValue.ingame, friends: contextValue.friendsData})});
-			setShouldUpdate(!shouldUpdate);
-		}
-	}, [shouldUpdate]);
+		dispatch(getUsers());
+		window.localStorage.user = user.name + "," + user.id;
+		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
+	}, []);
 
 	const handleInput = (input: string) => {
 		inputName = input;
@@ -30,23 +26,32 @@ const Home = () => {
 
 	async function test (which: number) {
 
-		console.log("location : " + location.pathname);
-		console.log("pathname : " + history.location.pathname);
-		console.log("window href : " + window.location.href.split(':', 2));
+		//console.log("location : " + location.pathname);
+		//console.log("pathname : " + history.location.pathname);
+		//console.log("window href : " + window.location.href.split(':', 2));
+
 		if (which === 1)
 		{
-			axios.get(baseURL + 'clients/all', {headers: {name: 'lol', token: 'love'}}).then((ret) => console.log(ret.data));
+			var input: any = document.getElementById("input");
+			input.value = "";
+			//axios.get(baseURL + 'clients/all', {headers: {name: 'lol', token: 'love'}}).then((ret) => console.log(ret.data));
 		}
 		else if (which === 2)
-			axios.get(baseURL + 'clients/one/' + inputName).then((ret) => console.log(ret.data));
+		{
+			//axios.get(baseURL + 'clients/one/' + inputName).then((ret) => console.log(ret.data));
+			//await dispatch(getUser(inputName));
+			//await console.log(user);
+		}
 	};
 
 	return (
-		<div className="home">
-			<Navigation userCard={contextValue} />
-			<input onChange={(e) => handleInput(e.target.value)} placeholder='type client name'></input>
-			<button type='submit' onClick={() => {test(2)}}>get One Client</button>
-			<button type='submit' onClick={() => {test(1)}}>get All Clients</button>
+		<div>
+			<Navigation userCard={user} />
+			<div className="home">
+				<input id='input' onChange={(e) => handleInput(e.target.value)} placeholder='type input for test 1'></input>
+				<button type='submit' onClick={() => {test(1)}}>test 1</button>
+				<button type='submit' onClick={() => {test(2)}}>test 2</button>
+			</div>
 		</div>
 	);
 };

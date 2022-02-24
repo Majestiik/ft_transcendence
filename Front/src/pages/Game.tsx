@@ -1,27 +1,23 @@
-import React, { useEffect, useState, useContext } from 'react';
-import Navigation from '../assets/components/Navigation';
-import UserContext from '../assets/components/UserContext';
-import axios from 'axios';
-import User from '../assets/components/Interface';
+import { useEffect } from 'react';
+import Navigation from '../components/Navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../redux/actions/users.actions';
 
 const Game = () => {
-	const userContext = useContext(UserContext);
-	const [shouldUpdate, setShouldUpdate] = useState(true);
+	const dispatch = useDispatch();
+	const user = useSelector((state: any) => state.userReducer);
+	//const users = useSelector((state: any) => state.usersReducer);
 	
 	useEffect(() => {
-		if (shouldUpdate)
-		{
-			console.log("Update in Friends...");
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateClientsData(ret.data));
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateFriendsData(ret.data));
-			window.addEventListener("beforeunload", function() {axios.patch('http://localhost:3003/clients/' + userContext.id, {online: false}/*{name: userContext.name, avatar: userContext.avatar, level: userContext.level, online: false, ingame: userContext.ingame, friends: userContext.friendsData}*/)});
-			setShouldUpdate(!shouldUpdate);
-		}
-	}, [shouldUpdate]);
+		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
+	}, []);
 
 	return (
 		<div>
-			<Navigation userCard={userContext}/>
+			<Navigation userCard={user}/>
+			<div className='game'>
+
+			</div>
 		</div>
 	);
 };

@@ -1,57 +1,40 @@
-import React, { useEffect, useState, useContext } from 'react';
-import UserContext from '../assets/components/UserContext';
-import axios from 'axios';
-import User from '../assets/components/Interface';
+import User from '../components/Interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../redux/actions/user.actions';
+import { registerUser, updateUser } from '../redux/actions/users.actions';
 
 const Connect = () => {
-	const [shouldUpdate, setShouldUpdate] = useState(true);
-	const userContext = useContext(UserContext);
+	const dispatch = useDispatch();
+	const users = useSelector((state: any) => state.usersReducer);
+	//const user = useSelector((state: any) => state.userReducer);
+
 	var inputName: string;
 
-	useEffect(() => {
-		console.log("Update in Connect...");
-		axios.get('http://localhost:3003/clients').then((ret) => userContext.updateClientsData(ret.data)).then(() => console.log(userContext.clientsData));
-		//window.addEventListener("beforeunload", function() {axios.put('http://localhost:3003/clients/' + userContext.id, {name: userContext.name, avatar: userContext.avatar, level: userContext.level, online: false, ingame: userContext.ingame, friends: userContext.friendsData})});
-	}, [shouldUpdate]);
-
 	async function getClient(name: string) : Promise<User | undefined> {
-		let users : User[] = (await axios.get('http://localhost:3003/clients')).data;
-		return users.filter(u => u.name == name)[0];
+		return users.filter((u: any) => u.name === name)[0];
 	};
 
 	const handleInput = (input: string) => {
 		inputName = input;
 	};
 
-	const setUser = () => {
+	async function connection () {
 		if (!inputName)
 			return;
 		getClient(inputName).then((client : User | undefined) => {
 			if (!client) {
-				axios.post('http://localhost:3003/clients', {
-					name: inputName,
-					avatar: "./assets/avatars/avatar1.png",
-					level: 0,
-					online: true,
-					ingame: false,
-					friends: [],
-					id: 0
-				})
-				.then(res => userContext.updateUser(res.data));
+				dispatch(registerUser(inputName));
 			} else if (client) {
-				client.online = true;
-				axios.put('http://localhost:3003/clients/' + client.id, client);
-				userContext.updateUser(client);
-				axios.get('http://localhost:3003/clients').then((ret) => userContext.updateFriendsData(ret.data))
+				dispatch(updateUser(client.id, {online: true}))
 			}
-		});
+		}).then(() => {dispatch(getUser(inputName));});
 	};
 
 	return (
 		<div className='connect'>
 			Type your Name :
 			<input onChange={(e) => handleInput(e.target.value)} placeholder='yes here ...'></input>
-			<button type='submit' onClick={setUser}>confirm</button>
+			<button type='submit' onClick={connection}>confirm</button>
 		</div>
 	);
 };

@@ -1,28 +1,60 @@
-import React, { useEffect, useState, useContext } from 'react';
-import Navigation from '../assets/components/Navigation';
-import UserContext from '../assets/components/UserContext';
-import axios from 'axios';
-import User from '../assets/components/Interface';
+import { useEffect, useState } from 'react';
+import Navigation from '../components/Navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../redux/actions/users.actions';
+import { url } from 'inspector';
+import { getUser } from '../redux/actions/user.actions';
 
 const Options = () => {
 
-	const userContext = useContext(UserContext);
-	const [shouldUpdate, setShouldUpdate] = useState(true);
+	const dispatch = useDispatch();
+	const user = useSelector((state: any) => state.userReducer);
+	//const users = useSelector((state: any) => state.usersReducer);
 	
+	var avatarSrc = [
+		"./assets/avatars/avatar1.png", "./assets/avatars/avatar2.png", "./assets/avatars/avatar3.png", "./assets/avatars/avatar4.png",
+		"./assets/avatars/avatar5.png", "./assets/avatars/avatar6.png", "./assets/avatars/avatar7.png", "./assets/avatars/avatar8.png"];
+	const [avatarCN, setAvatarCN] = useState(["avatar", "avatar", "avatar", "avatar", "avatar", "avatar", "avatar", "avatar"]);
+		
 	useEffect(() => {
-		if (shouldUpdate)
+		selectAvatar(avatarSrc.indexOf(user.avatar), true);
+		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
+	}, []);
+
+	const selectAvatar = (index: number, force: boolean) => {
+		if (avatarSrc.indexOf(user.avatar) !== index || force)
 		{
-			console.log("Update in Friends...");
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateClientsData(ret.data));
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateFriendsData(ret.data));
-			window.addEventListener("beforeunload", function() {axios.patch('http://localhost:3003/clients/' + userContext.id, {online: false}/*{name: userContext.name, avatar: userContext.avatar, level: userContext.level, online: false, ingame: userContext.ingame, friends: userContext.friendsData}*/)});
-			setShouldUpdate(!shouldUpdate);
+			setAvatarCN(["avatar", "avatar", "avatar", "avatar", "avatar", "avatar", "avatar", "avatar"]);
+			setAvatarCN(existingItems => {
+				return [
+				  ...existingItems.slice(0, index),
+				  existingItems[index] = "avatarActive",
+				  ...existingItems.slice(index + 1), ]
+				})
+			dispatch(updateUser(user.id, {avatar: avatarSrc[index]}))
+			dispatch(getUser(user.name));
 		}
-	}, [shouldUpdate]);
+	};
 
 	return (
 		<div>
-			<Navigation userCard={userContext} />
+			<Navigation userCard={user} />
+			<div className='options'>
+				<div className='optionsWindow'>
+					<div className='optionsAvatar'>
+						<div className='title'> 
+							Choose your Avatar 
+						</div>
+						<ul className='avatarList'>
+						{
+							avatarSrc.map((src) => {
+								let index = avatarSrc.indexOf(src);
+								return(<img key= {index} className={avatarCN[index]} src={avatarSrc[index]} width="120px" alt="" onClick={() => {selectAvatar(index, false)}} />);})
+						}
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };

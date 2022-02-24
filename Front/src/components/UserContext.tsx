@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-//import User from './assets/components/Interface';
 
 const fdat: any[] = [];
 const cdat: any[] = [];

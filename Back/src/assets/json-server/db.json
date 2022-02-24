@@ -2,28 +2,13 @@
   "clients": [
     {
       "name": "666",
-      "avatar": "./assets/avatars/avatar4.png",
+      "avatar": "./assets/avatars/avatar5.png",
       "level": 10,
       "online": true,
       "ingame": true,
       "friends": [
-        "simon",
         "Leickmay",
-        "newPlayer",
-        "Jordan",
-        "Swiin_Ice",
-        "testeur",
-        "MaBiche",
-        "coucou",
-        "Heyhey",
-        "Hello",
-        "testBG",
-        "Majestiik",
-        "12345678910",
-        "TuFaisTropLeFou",
-        "8",
-        "testeur",
-        "666"
+        "simon"
       ],
       "id": 1
     },
@@ -177,26 +162,62 @@
       "level": 789,
       "online": false,
       "ingame": false,
-      "friends": [
-        "666",
-        "Leickmay",
-        "simon",
-        "MaBiche",
-        "Jordan",
-        "newPlayer",
-        "simon",
-        "simon"
-      ],
+      "friends": [],
       "id": 16
     },
     {
-      "name": "6662",
+      "name": "1",
       "avatar": "./assets/avatars/avatar1.png",
       "level": 0,
       "online": true,
       "ingame": false,
       "friends": [],
       "id": 17
+    },
+    {
+      "name": "2",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": true,
+      "ingame": false,
+      "friends": [],
+      "id": 18
+    },
+    {
+      "name": "3",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": true,
+      "ingame": false,
+      "friends": [],
+      "id": 19
+    },
+    {
+      "name": "4",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": true,
+      "ingame": false,
+      "friends": [],
+      "id": 20
+    },
+    {
+      "name": "66",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 21
+    },
+    {
+      "name": "333",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 22
     }
   ]
 }

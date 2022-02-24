@@ -1,66 +1,104 @@
-import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
-import UserContext from '../assets/components/UserContext';
-import User from '../assets/components/Interface';
-import Navigation from '../assets/components/Navigation';
-import FriendCard from '../assets/components/FriendCard';
+import { useEffect, useState } from 'react';
+import Navigation from '../components/Navigation';
+import FriendCard from '../components/FriendCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser, getUsers } from '../redux/actions/users.actions';
+import { getUser } from '../redux/actions/user.actions';
+import Popup from '../components/Popup';
+import { TIMEOUT } from 'dns';
 
 const Friends = () => {
-	const userContext = useContext(UserContext);
-	const [shouldUpdate, setShouldUpdate] = useState(true);
+	const dispatch = useDispatch();
+	const user = useSelector((state: any) => state.userReducer);
+	const users = useSelector((state: any) => state.usersReducer);
+	
 	var inputName: string = "";
-
+	const [popupData, setPopupData] = useState(["...............", "popupHide"]);
 	
 	useEffect(() => {
-		if (shouldUpdate)
-		{
-			console.log("Update in Friends...");
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateClientsData(ret.data));
-			axios.get('http://localhost:3003/clients').then((ret) => userContext.updateFriendsData(ret.data));
-			window.addEventListener("beforeunload", function() {axios.patch('http://localhost:3003/clients/' + userContext.id, {online: false}/*{name: userContext.name, avatar: userContext.avatar, level: userContext.level, online: false, ingame: userContext.ingame, friends: userContext.friendsData}*/)});
-			setShouldUpdate(!shouldUpdate);
-		}
-	}, [shouldUpdate]);
+		refreshFriendsList();
+		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
+	}, []);
 
-	const addFriend = () => {
-		var find = false;
-		var client: User =({
-			name: "",
-			avatar: "",
-			level: 0,
-			online: false,
-			ingame: false,
-			friends: [],
-			id: 0
-		});
-		userContext.clientsData.forEach(element => (inputName && (element.name.toUpperCase() === inputName.toUpperCase())) ? ((client = element) && (find = true)) : (null));
-		if (find)
-		{
-			userContext.friendsData.push(client.name);
-			axios.put('http://localhost:3003/clients/' + userContext.id, {name: userContext.name, avatar: userContext.avatar, level: userContext.level, online: userContext.online, ingame: userContext.ingame, friends: userContext.friendsData});
-		}
+	async function activePopup(message: string, isValid: boolean) {
+		if (isValid)
+			setPopupData([message, "popupShowValid"]);
 		else
-			alert("Not Found !");
+			setPopupData([message, "popupShowError"]);
+		await new Promise(f => setTimeout(f, 1500));
+		setPopupData([message, "popupHide"]);
+
+	};
+
+	const refreshFriendsList = () => {
+		activePopup("Friends List has been reload !", true);
+		dispatch(getUsers());
 	};
 
 	const handleInput = (input: string) => {
 		inputName = input;
 	};
 
+	async function addFriend() {
+		var find = false;
+		var client: any;
+		var newFriendsList = user.friends;
+		var input: any = document.getElementById("input");
+		input.value = "";
+		if (!inputName) {
+			activePopup("Input is Empty !", false);
+			return;
+		} else if (user.friends.indexOf(inputName) !== -1) {
+			activePopup("Friend already add !", false);
+			return;
+		} else if (user.name === inputName)
+		{
+			activePopup("You can't add yourself !", false);
+			return;
+		}
+		users.forEach((element: any) => (inputName && (element.name === inputName)) ? ((client = element) && (find = true)) : (null));
+		if (!find)
+		{
+			activePopup("User not exist !", false);
+			return;
+		}
+		else if (client)
+		{
+			activePopup(client.name + " has been added !", true);
+			await newFriendsList.push(client.name)
+			dispatch(updateUser(user.id, {friends: newFriendsList}));
+			dispatch(getUser(user.name));
+		}
+	};
+
+	async function delFriend(toDelete: string) {
+		activePopup(toDelete + " has been deleted !", false);
+		var newFriendsList: [] = await user.friends.filter((name: string) => name != toDelete);
+		dispatch(updateUser(user.id, {friends: newFriendsList}));
+		dispatch(getUser(user.name));
+	};
+
 	return (
-		<div className="friends">
-			<Navigation userCard={userContext}/>
-			<div className='friendsSearch'>
-				Add Friend :
-				<input onChange={(e) => handleInput(e.target.value)} placeholder='type name'></input>
-				<button type='submit' onClick={() => {setShouldUpdate(!shouldUpdate); addFriend();}}>add</button>
-				<button type='submit' onClick={() => setShouldUpdate(!shouldUpdate)}>f5</button>
+		<div>
+			<Navigation userCard={user}/>
+			<Popup popupData={popupData}/>
+			<div className="friends">
+				<div className='friendsSearch'>
+					Add Friend :
+					<input id='input' onChange={(e) => handleInput(e.target.value)} placeholder='type name'></input>
+					<button type='submit' onClick={() => {addFriend();}}>+</button>
+					<button type='submit' onClick={() => {refreshFriendsList();}}>🗘</button>
+				</div>
+				<ul className='friendsList'>
+				{
+					users.map((friendCard: any) => {
+						if (user.friends.indexOf(friendCard.name) > -1)
+						{
+							let props = {friendCard: friendCard, delFriend: delFriend };
+							return ( <FriendCard key={friendCard.id} props={props}/>)}})
+				}
+				</ul>
 			</div>
-			<ul className='friendsList'>
-				{userContext.clientsData.map((friendCard) => {
-					if (userContext.friendsData.indexOf(friendCard.name) > -1)
-						return <FriendCard key={friendCard.id} friendCard={friendCard} />})}
-			</ul>
 		</div>
 	);
 };
