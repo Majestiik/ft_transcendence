@@ -17,12 +17,12 @@ function App() {
 	const user = useSelector((state: any) => state.userReducer);
 
 	useEffect(() => {
-		let storedData = window.localStorage.user ? window.localStorage.user.split(",") : null;
-		if (storedData)
-		{
-			dispatch(getUser(storedData[0]));
-			dispatch(updateUser(storedData[1], {online: true}));
-		}
+		//let storedData = window.localStorage.user ? window.localStorage.user.split(",") : null;
+		//if (storedData)
+		//{
+		//	dispatch(getUser(storedData[0]));
+		//	dispatch(updateUser(storedData[1], {online: true}));
+		//}
 	}, []);
 
 	if (user && user.name !== "")

@@ -13,6 +13,8 @@ const Friends = () => {
 	const users = useSelector((state: any) => state.usersReducer);
 	
 	var inputName: string = "";
+	var input: any = document.getElementById("input");
+
 	const [popupData, setPopupData] = useState(["...............", "popupHide"]);
 	
 	useEffect(() => {
@@ -43,7 +45,6 @@ const Friends = () => {
 		var find = false;
 		var client: any;
 		var newFriendsList = user.friends;
-		var input: any = document.getElementById("input");
 		input.value = "";
 		if (!inputName) {
 			activePopup("Input is Empty !", false);

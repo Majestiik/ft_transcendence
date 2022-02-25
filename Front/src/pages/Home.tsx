@@ -3,6 +3,8 @@ import Navigation from '../components/Navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers, updateUser } from '../redux/actions/users.actions';
 import { useEffect } from 'react';
+import ChatSocket from '../components/ChatSocket';
+
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const Home = () => {
 		<div>
 			<Navigation userCard={user} />
 			<div className="home">
+				<ChatSocket />
 				<input id='input' onChange={(e) => handleInput(e.target.value)} placeholder='type input for test 1'></input>
 				<button type='submit' onClick={() => {test(1)}}>test 1</button>
 				<button type='submit' onClick={() => {test(2)}}>test 2</button>

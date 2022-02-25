@@ -2,9 +2,9 @@
   "clients": [
     {
       "name": "666",
-      "avatar": "./assets/avatars/avatar5.png",
+      "avatar": "./assets/avatars/avatar6.png",
       "level": 10,
-      "online": true,
+      "online": false,
       "ingame": true,
       "friends": [
         "Leickmay",
@@ -14,7 +14,7 @@
     },
     {
       "name": "Leickmay",
-      "avatar": "./assets/avatars/avatar2.png",
+      "avatar": "./assets/avatars/avatar4.png",
       "level": 78,
       "online": false,
       "ingame": false,
@@ -218,6 +218,24 @@
       "ingame": false,
       "friends": [],
       "id": 22
+    },
+    {
+      "name": "777",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 23
+    },
+    {
+      "name": "kk",
+      "avatar": "./assets/avatars/avatar1.png",
+      "level": 0,
+      "online": false,
+      "ingame": false,
+      "friends": [],
+      "id": 24
     }
   ]
 }
