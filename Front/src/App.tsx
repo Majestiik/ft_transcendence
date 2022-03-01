@@ -8,21 +8,25 @@ import NotFound from './pages/NotFound';
 import Options from './pages/Options';
 import Statisitcs from './pages/Statistics';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
 import { getUser } from "./redux/actions/user.actions";
 import { updateUser } from "./redux/actions/users.actions";
+import { getChannel } from "./redux/actions/channel.actions";
+import { getChannels } from "./redux/actions/channels.actions";
 
 function App() {
 	const dispatch = useDispatch();
 	const user = useSelector((state: any) => state.userReducer);
 
 	useEffect(() => {
-		//let storedData = window.localStorage.user ? window.localStorage.user.split(",") : null;
-		//if (storedData)
-		//{
-		//	dispatch(getUser(storedData[0]));
-		//	dispatch(updateUser(storedData[1], {online: true}));
-		//}
+		let storedData = window.localStorage.user ? window.localStorage.user.split(",") : null;
+		if (storedData)
+		{
+			dispatch(getUser(storedData[0]));
+			dispatch(updateUser(storedData[1], {online: true}));
+		}
+		dispatch(getChannels());
+		dispatch(getChannel(1));
 	}, []);
 
 	if (user && user.name !== "")

@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
@@ -13,12 +13,12 @@ import { io, Socket } from 'socket.io-client';
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk))); // enelever composeWithDevTools for production
 store.dispatch(getUsers());
 
-const socket = io("http://localhost:3001", { transports : ['websocket'] });
+const socket = io("http://" + window.location.hostname + ":3001/", { transports : ['websocket'] });
 export const SocketContext = createContext(socket);
 socket.on('connect', () => {
 	console.log("connected");
+	console.log("http://" + window.location.hostname + ":3001/");
 });
-
 
 ReactDOM.render(
 		<Provider store={store}>

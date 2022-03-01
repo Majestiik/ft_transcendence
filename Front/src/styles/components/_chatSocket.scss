@@ -1,35 +1,56 @@
 .chatSocket {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: column;
-	justify-content: space-evenly;
-	width: 80%;
-	//height: 650px;
+	width: 90%;
 	background: rgba(0, 0, 0, 0.541);
-	border-radius: 10%;
+	border-radius: 1%;
 	border: 2px solid $color-1;
 	margin: 50px 0%;
 	//padding: 50px 0px 50px 0px;
-	align-items: center;
+	//align-items: center;
 	font-family: $font-1;
   	font-size: 2rem;
   	color: $color-2;
 	text-shadow: none;
 	
 	.chatWindow {
-		line-height: 20px;
-		height: 400px;
-		width: 95%;
-		background: rgba(255, 105, 255, 0.295);
-		background: url("/assets/img/bg_friendCard.png") no-repeat center/contain;
-		border-radius: 10%;
-		border: 2px solid $color-2;
-		margin: 20px;
-		padding: 20px;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.chatMsgs {
+		//line-height: 20px;
+		height: 750px;
+		width: 85%;
+		background: rgba(97, 97, 97, 0.753);
+		//background: url("/assets/img/chatBackground.png") no-repeat center/cover;
+		border-radius: 1%;
+		border: 2px solid $color-1;
+		margin: 40px 10px 0px 0px;
+		padding: 40px;
 		font-size: 1.5rem;
+		color: $color-3;
 		overflow-y: scroll;
 		overflow-wrap: break-word;
 
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.chatChannels {
+		display: flex;
+		flex-direction: column;
+		background: rgba(59, 59, 59, 0.753);
+		border-radius: 1%;
+		border: 2px solid $color-1;
+		width: 15%;
+		min-width: 15%;
+		margin: 40px 0px 0px 10px;
+		//padding: 40px;
+		align-items: center;
+		text-align: center;
+		overflow-y: scroll;
+		overflow-wrap: break-word;
+		
 		&::-webkit-scrollbar {
 			display: none;
 		}
@@ -50,7 +71,7 @@
 		font-size: 1.5rem;
 		overflow-y: scroll clip;
 		overflow-wrap: break-word;
-		width: 1000px;
+		width: 90%;
 		margin: 20px;
 	}
 
@@ -76,4 +97,18 @@
 		color: $color-4;
 		transition: all 0s ease-out;
 	}
+
+	.chan {
+		width: 100%;
+		color: $color-1;
+		transition: all 0.5s ease-out;
+	}
+
+	.chan-active {
+		background-color: rgba(255, 77, 255, 0.363);
+		width: 100%;
+		color: $color-2;
+		transition: all 0.5s ease-out;
+	}
+
 }

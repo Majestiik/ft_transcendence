@@ -6,6 +6,7 @@ import { updateUser, getUsers } from '../redux/actions/users.actions';
 import { getUser } from '../redux/actions/user.actions';
 import Popup from '../components/Popup';
 import { TIMEOUT } from 'dns';
+import ChatSocket from '../components/ChatSocket';
 
 const Friends = () => {
 	const dispatch = useDispatch();

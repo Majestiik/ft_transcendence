@@ -2,13 +2,13 @@
   "clients": [
     {
       "name": "666",
-      "avatar": "./assets/avatars/avatar6.png",
+      "avatar": "./assets/avatars/avatar5.png",
       "level": 10,
-      "online": false,
+      "online": true,
       "ingame": true,
       "friends": [
         "Leickmay",
-        "simon"
+        "777"
       ],
       "id": 1
     },
@@ -225,7 +225,9 @@
       "level": 0,
       "online": false,
       "ingame": false,
-      "friends": [],
+      "friends": [
+        "666"
+      ],
       "id": 23
     },
     {
@@ -236,6 +238,130 @@
       "ingame": false,
       "friends": [],
       "id": 24
+    }
+  ],
+  "chat": [
+    {
+      "name": "First",
+      "topic": "Topic undefined",
+      "msgs": [
+        "<666>: 5",
+        "<666>: 8",
+        "<666>: je vois",
+        "<666>: A Lbatard",
+        "<666>: Putride ?",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: d",
+        "<666>: ",
+        "<666>: ",
+        "<666>: ",
+        "<666>: dsd",
+        "<666>: fd",
+        "<666>: sdfas",
+        "<666>: dfsdaf",
+        "<666>: dsaf",
+        "<666>: das",
+        "<666>: af",
+        "<666>: dsaf",
+        "<666>: asdf",
+        "<666>: asdf",
+        "<666>: dasf",
+        "<666>: ads",
+        "<666>: sda",
+        "<666>: ",
+        "<666>: sadf",
+        "<666>: ",
+        "<666>: dg",
+        "<666>: df",
+        "<666>: g",
+        "<666>: fdsg",
+        "<666>: gfdg",
+        "<666>: fdg",
+        "<666>: fd",
+        "<666>: g",
+        "<666>: fg",
+        "<666>: df",
+        "<666>: gfdgdfgfd",
+        "<666>: ",
+        "<666>: fdg",
+        "<666>: ",
+        "<666>: ",
+        "<666>: dfg",
+        "<666>: ",
+        "<666>: g",
+        "<666>: fdg",
+        "<666>: ",
+        "<666>: ",
+        "<666>: ",
+        "<666>: ",
+        "<666>: g",
+        "<666>: g",
+        "<666>: e.target.value !== \"\"",
+        "<666>: lol",
+        "<666>: 5",
+        "<666>: ;;lk",
+        "<666>: kk",
+        "<666>: lol",
+        "<666>: arreteu",
+        "<666>: BG des bois",
+        "<666>: ok",
+        "<666>: oui",
+        "<666>: non",
+        "<666>: 8",
+        "<666>: 8",
+        "<666>: ouii"
+      ],
+      "members": [
+        "666"
+      ],
+      "op": [
+        "666"
+      ],
+      "private": false,
+      "invitOnly": false,
+      "id": 1
+    },
+    {
+      "name": "Second",
+      "topic": "Topic undefined",
+      "msgs": [
+        "<666>: lol",
+        "<666>: non"
+      ],
+      "members": [
+        "666"
+      ],
+      "op": [
+        "666"
+      ],
+      "private": false,
+      "invitOnly": false,
+      "id": 2
+    },
+    {
+      "name": "Third",
+      "topic": "Topic undefined",
+      "msgs": [
+        "<666>: sii",
+        "<666>: okk"
+      ],
+      "members": [
+        "666"
+      ],
+      "op": [
+        "666"
+      ],
+      "private": false,
+      "invitOnly": false,
+      "id": 3
     }
   ]
 }

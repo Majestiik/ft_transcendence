@@ -2,8 +2,10 @@
 import Navigation from '../components/Navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers, updateUser } from '../redux/actions/users.actions';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import ChatSocket from '../components/ChatSocket';
+import chatContext from '../App'
+import { getChannel } from '../redux/actions/channel.actions';
 
 
 const Home = () => {
@@ -12,9 +14,6 @@ const Home = () => {
 	//const users = useSelector((state: any) => state.usersReducer);
 
 	var inputName: string = "";
-
-	//const location = useLocation()
-	//const history = useHistory()
 
 	useEffect(() => {
 		dispatch(getUsers());
@@ -28,9 +27,6 @@ const Home = () => {
 
 	async function test (which: number) {
 
-		//console.log("location : " + location.pathname);
-		//console.log("pathname : " + history.location.pathname);
-		//console.log("window href : " + window.location.href.split(':', 2));
 
 		if (which === 1)
 		{
