@@ -13,6 +13,7 @@ import { getUser } from "./redux/actions/user.actions";
 import { updateUser } from "./redux/actions/users.actions";
 import { getChannel } from "./redux/actions/channel.actions";
 import { getChannels } from "./redux/actions/channels.actions";
+import ChatSocket from "./components/ChatSocket";
 
 function App() {
 	const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
 					<Route path="/options" exact component={Options} />
 					<Route component={NotFound} />
 				</Switch>
+			<ChatSocket />
 			</BrowserRouter>
 		);
 	else

@@ -93,6 +93,31 @@ input:active {
 	border-color: $color-2;
 }
 
+textarea {
+	font-family: $font-1;
+	font-size: 1.5rem;
+	color: $color-1;
+	background: black;
+	border-color: $color-1;
+}
+
+textarea:hover {
+	font-family: $font-1;
+	font-size: 1.5rem;
+	color: $color-1;
+	background: black;
+	border-color: $color-2;
+	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
+}
+
+textarea:active {
+	font-family: $font-1;
+	font-size: 1.5rem;
+	color: $color-1;
+	background: black;
+	border-color: $color-2;
+}
+
 .spec:hover {
 	cursor: url("/assets/img/cursor_little_pink.png")50 50, auto;
 }
