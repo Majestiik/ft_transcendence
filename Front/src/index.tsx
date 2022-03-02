@@ -21,12 +21,14 @@ socket.on('connect', () => {
 });
 
 ReactDOM.render(
-		<Provider store={store}>
+	<Provider store={store}>
+		<React.StrictMode>
 		<SocketContext.Provider value={socket}>
 			<App/>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 		</SocketContext.Provider>
-		</Provider>,
+		</React.StrictMode>
+	</Provider>,
   document.getElementById('root')
 );
 

@@ -67,7 +67,7 @@ const ChatSocket = () => {
 
 	const handleKeyDown = (e: any) => {
 		e.preventDefault();
-		if (e.key === 'Enter' && inputMsg !== "" && chanSelected !== 0)
+		if (e.key === 'Enter' && inputMsg.trim().length !== 0 && chanSelected !== 0)
 		{
 			e.target.value = "";
 			socket.emit('msgForServ', {cliName: user.name, msg: inputMsg});
