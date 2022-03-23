@@ -19,17 +19,25 @@ let ClientsController = class ClientsController {
     constructor(clientsService) {
         this.clientsService = clientsService;
     }
-    getAllClients() {
-        return this.clientsService.getAllClients();
+    getAllClients(req) {
+        if (req.headers.token === 'love')
+            return this.clientsService.getAllClients(req.headers.token);
     }
     getClient(name) {
         return this.clientsService.getClient(name);
     }
+    registerClient(name) {
+        return this.clientsService.registerClient(name);
+    }
+    updateClient(id, dataCli) {
+        return this.clientsService.updateClient(id, dataCli);
+    }
 };
 __decorate([
     (0, common_1.Get)('all'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "getAllClients", null);
 __decorate([
@@ -37,8 +45,23 @@ __decorate([
     __param(0, (0, common_1.Param)('name')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "getClient", null);
+__decorate([
+    (0, common_1.Post)('register/:name'),
+    __param(0, (0, common_1.Param)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ClientsController.prototype, "registerClient", null);
+__decorate([
+    (0, common_1.Patch)('update/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], ClientsController.prototype, "updateClient", null);
 ClientsController = __decorate([
     (0, common_1.Controller)('clients'),
     __metadata("design:paramtypes", [clients_service_1.ClientsService])

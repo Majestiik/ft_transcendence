@@ -10,14 +10,41 @@ exports.ClientsService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 let ClientsService = class ClientsService {
-    async getAllClients() {
+    constructor() {
+        this.clients = null;
+        this.client = null;
+    }
+    async getAllClients(data) {
         this.clients = (await axios_1.default.get('http://localhost:3003/clients')).data;
         return this.clients;
     }
     ;
     async getClient(name) {
+        this.client = null;
         this.clients = (await axios_1.default.get('http://localhost:3003/clients')).data;
-        return this.clients.filter(u => u.name == name)[0];
+        this.clients.forEach((cli) => {
+            if (cli.name === name)
+                this.client = cli;
+        });
+        return this.client;
+    }
+    ;
+    async registerClient(name) {
+        this.clients = (await axios_1.default.post('http://localhost:3003/clients', {
+            name: name,
+            avatar: "./assets/avatars/avatar1.png",
+            level: 0,
+            online: true,
+            ingame: false,
+            friends: [],
+            id: 0
+        })).data;
+        return this.clients;
+    }
+    ;
+    async updateClient(id, dataCli) {
+        this.clients = (await axios_1.default.patch('http://localhost:3003/clients/' + id, dataCli)).data;
+        return this.clients;
     }
     ;
 };

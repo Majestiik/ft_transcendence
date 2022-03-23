@@ -10,14 +10,17 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const chat_gateway_1 = require("./chat.gateway");
 const clients_module_1 = require("./clients/clients.module");
+const chat_service_1 = require("./chat/chat.service");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [clients_module_1.ClientsModule],
+        imports: [clients_module_1.ClientsModule, chat_module_1.ChatModule],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, chat_gateway_1.ChatGateway, chat_service_1.ChatService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
