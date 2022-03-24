@@ -5,7 +5,7 @@ import { updateUser } from '../redux/actions/users.actions';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { Canvas } from '@react-three/fiber'
+import { Canvas, dispose } from '@react-three/fiber'
 import { Physics, useBox } from '@react-three/cannon'
 import { setgroups } from 'process';
 import { CubeCamera, Vector3 } from 'three';
@@ -23,6 +23,7 @@ const Game = () => {
 	
 	/*var loader = new THREE.TextureLoader();
     var texture = loader.load( urlFloortexture );*/
+	var ball: any;
 
 	//SCENE
 	const scene = new THREE.Scene();
@@ -31,13 +32,14 @@ const Game = () => {
 	//CAMERA
 	const cam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 	cam.position.x = 0;
-	cam.position.y = 5;
+	cam.position.y = 10;
 	cam.position.z = 5;
 
 	//RENDERER
 	const renderer = new THREE.WebGLRenderer({ antialias: true });
-	if (elem)
-		renderer.setSize(elem.offsetWidth - 5, elem.offsetHeight - 5);
+	//if (elem)
+	//	renderer.setSize(elem.offsetWidth - 5, elem.offsetHeight - 5);
+	renderer.setSize( (window.innerWidth * 90 / 100) - 20, 795);
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.shadowMap.enabled = true;
 
@@ -70,55 +72,108 @@ const Game = () => {
 			animationsMap.set(a.name, mixer.clipAction(a))
 		})
 	});*/
-
-	let mixer: THREE.AnimationMixer;
-	const animationActions: THREE.AnimationAction[] = [];
-	let activeAction: THREE.AnimationAction;
-	let lastAction: THREE.AnimationAction;
-	const clock = new THREE.Clock();
-
-	new GLTFLoader().load('http://localhost:3000/assets/models/Ball3/scene.gltf', function ( gltf ) {
-
-		gltf.scene.translateY(2);
-		mixer = new THREE.AnimationMixer(gltf.scene);
-        const animationAction = mixer.clipAction((gltf as any).animations[0]);
-		console.log(animationAction);
-        animationActions.push(animationAction);
-        activeAction = animationActions[0];
-		console.log(activeAction);
-		activeAction.play();
-		mixer.update(clock.getDelta());
-		scene.add( gltf.scene );
-
-	} );
-
-	const setAction = (toAction: THREE.AnimationAction) => {
-		if (toAction != activeAction) {
-			lastAction = activeAction
-			activeAction = toAction
-			//lastAction.stop()
-			lastAction.fadeOut(1)
-			activeAction.reset()
-			activeAction.fadeIn(1)
-			activeAction.play()
+	
+	function _onKeyDown(e: any) {
+		switch (e.keyCode) {
+			case 87: // w
+				console.log("w");
+				ball.position.z -= 0.1;
+				break;
+			case 65: // a
+				console.log("a");
+				ball.position.x -= 0.1;
+				break;
+			case 83: // s
+				console.log("s");
+				ball.position.z += 0.1;
+				break;
+			case 68: // d
+				console.log("d");
+				ball.position.x += 0.1;
+				break;
+		//case 38: // up
+		//case 37: // left
+		//case 40: // down
+		//case 39: // right
+		//break;
 		}
 	}
 
-	function animate() {
-		orbitControls.update();
-		renderer.render(scene, cam);
-		requestAnimationFrame(animate);
+	new GLTFLoader().load('http://localhost:3000/assets/models/Ball3/scene.gltf', function ( gltf ) {
+
+		ball = gltf.scene;
+		ball.translateY(1);
+		ball.traverse((c: any) => {
+			c.castShadow = true;
+		});
+		scene.add( ball );
+
+	} );
+
+	const [ballState, setBallState] = useState(0);
+
+	function updateBall() {
+		if (ball.position.y <= 1)
+			setBallState(0);
+		if (ballState === 0)
+			ball.position.y += 0.1;
+		if (ball.position.y >= 5)
+			setBallState(1);
+		if (ballState === 1)
+			ball.position.y -= 0.1;
+		console.log(ball.position.y);
 	};
-	
+
+	var now, delta, then = Date.now();
+	var interval = 1000/30;
+	function animate() {
+		requestAnimationFrame(animate);
+		//now = Date.now();
+		//delta = now - then;
+		//orbitControls.update();
+		//if (delta > interval) {
+		//	if (ball)
+		//		updateBall();
+		//		then = now - (delta % interval);
+		//	}
+		if (ball)
+		{
+			ball.rotation.y += 0.05;
+			ball.rotation.x += 0.05;
+			//ball.position.y += 0.01;
+			//if (ball.position.y < 1 && ballState === 1)
+			//	setBallState(0);
+			//if (ball.position.y > 2 && ballState === 0)
+			//	setBallState(1);
+			if (ballState === 0)
+				ball.position.y += 0.01;
+			//console.log(ball.position.y);
+			//else if (ballState === 1)
+			//	ball.position.y -= 0.01;
+		}
+		renderer.render(scene, cam);
+	};
+
+	function _OnWindowResize() {
+		cam.aspect = window.innerWidth / window.innerHeight;
+		cam.updateProjectionMatrix();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+	}
+
 	useEffect(() => {
+		setInterval(function() { console.log(ball.position.y); }, 1000);
+		//renderer.dispose();
 		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
-		console.log("lol");
-		if (elem)
-			elem.appendChild(renderer.domElement);
+		window.addEventListener('resize', () => { _OnWindowResize(); }, false);
+		document.addEventListener('keydown', (e) => _onKeyDown(e), false);
+		console.log("game reload");
+		document.getElementById('game')?.appendChild(renderer.domElement);;
+		//renderer.setSize(document.getElementById('game')?.offsetWidth - 5, document.getElementById('game')?.offsetHeight - 5);
+		//if (elem)
+		//	elem.appendChild(renderer.domElement);
+		setBallState(0);
 		animate();
 	}, [elem]);
-	
-	//animate();
 
 	function generateFloor() {
 		// TEXTURES
