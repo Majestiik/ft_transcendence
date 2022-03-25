@@ -24,6 +24,7 @@ const Game = () => {
 	var skybox: any;
 	var ball: any;
 	var stars: any;
+	var ship: any;
 	//SCENE
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color(0xa8def0);	
@@ -123,6 +124,7 @@ const Game = () => {
 		skybox = new THREE.Mesh(skyboxGeo, materialArray);
 		scene.add(skybox);
 	} );
+
 	new GLTFLoader().load('http://localhost:3000/assets/models/Ball3/scene.gltf', function ( gltf ) {
 		ball = gltf.scene;
 		ball.translateY(1);
@@ -130,6 +132,17 @@ const Game = () => {
 			c.castShadow = true;
 		});
 		scene.add( ball );
+	} );
+
+	new GLTFLoader().load('http://localhost:3000/assets/models/Ship/scene.gltf', function ( gltf ) {
+		ship = gltf.scene;
+		ship.translateY(3);
+		ship.translateX(10);
+		ship.scale.set(0.6, 0.6, 0.6);
+		ship.traverse((c: any) => {
+			c.castShadow = true;
+		});
+		scene.add( ship );
 	} );
 
 	/*function updateBall() {
@@ -215,11 +228,11 @@ const Game = () => {
 				displacementMap: sandHeightMap, displacementScale: 0.1,
 				aoMap: sandAmbientOcclusion
 			})*/
-		const material = new THREE.MeshPhongMaterial({ map: placeholder })	
-		const matStdFloor = new THREE.MeshStandardMaterial( { color: 0x808080, roughness: 0.1, metalness: 0 } );
+		const material1 = new THREE.MeshPhongMaterial({ map: placeholder })	
+		const material2 = new THREE.MeshStandardMaterial( { color: 0x808080, roughness: 0.1, metalness: 0 } );
 		for (let i = 0; i < NUM_X; i++) {
 			for (let j = 0; j < NUM_Z; j++) {
-				const floor = new THREE.Mesh(geometry, matStdFloor)
+				const floor = new THREE.Mesh(geometry, material2)
 				floor.receiveShadow = true
 				floor.rotation.x = - Math.PI / 2	
 				floor.position.x = i * WIDTH - (NUM_X / 2) * WIDTH
@@ -241,7 +254,7 @@ const Game = () => {
 		dirLight.shadow.camera.far = 200;
 		dirLight.shadow.mapSize.width = 4096;
 		dirLight.shadow.mapSize.height = 4096;
-		//scene.add(dirLight);
+		scene.add(dirLight);
 
 		//scene.add( new THREE.CameraHelper(dirLight.shadow.camera))
 
@@ -274,8 +287,8 @@ const Game = () => {
 
 		//scene.add( new RectAreaLightHelper( rectLight1 ) );
 		//scene.add( new RectAreaLightHelper( rectLight2 ) );
-		scene.add( new RectAreaLightHelper( rectLight3 ) );
-		scene.add( new RectAreaLightHelper( rectLight4 ) );
+		//scene.add( new RectAreaLightHelper( rectLight3 ) );
+		//scene.add( new RectAreaLightHelper( rectLight4 ) );
 	}
 	return (
 		<div>
