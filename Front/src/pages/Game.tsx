@@ -25,14 +25,20 @@ const Game = () => {
 	var ball: any;
 	var stars: any;
 	var ship: any;
+
 	//SCENE
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color(0xa8def0);	
+
 	//CAMERA
 	const cam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 	cam.position.x = 0;
-	cam.position.y = 10;
-	cam.position.z = 5;
+	cam.position.y = 20;
+	cam.position.z = 72;
+	cam.rotation.x = 5.8;
+	cam.rotation.y = 0;
+	cam.rotation.z = 0;
+
 	//RENDERER
 	const renderer = new THREE.WebGLRenderer({ antialias: true });
 	//if (elem)
@@ -40,18 +46,24 @@ const Game = () => {
 	renderer.setSize( (window.innerWidth * 90 / 100) - 20, 795);
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.shadowMap.enabled = true;
-	//CONTROLS
+
+	//CONTROLS ORBITS (For DEV)
 	const orbitControls = new OrbitControls(cam, renderer.domElement);
-	orbitControls.enableDamping = true;
+	//orbitControls.enableDamping = true;
 	//orbitControls.minDistance = 5;
 	//orbitControls.maxDistance = 15;
 	//orbitControls.enablePan = false;
 	//orbitControls.maxPolarAngle = Math.PI / 2 - 0.05;
 	orbitControls.update();
+
+	//CONTROLS SHIP
+	var left: boolean, right: boolean = false;
+
 	//LIGHT
 	light();
 	// PLANE
 	generateFloor();
+
 	/*new GLTFLoader().load('http://localhost:3000/assets/models/Soldier.glb', function (gltf) {
 		const model = gltf.scene;
 		model.traverse(function (object: any) {
@@ -68,20 +80,22 @@ const Game = () => {
 	function _onKeyDown(e: any) {
 		switch (e.keyCode) {
 			case 87: // w
-				console.log("w");
-				ball.position.z -= 0.1;
+				//console.log("w");
+				//ball.position.z -= 0.1;
 				break;
 			case 65: // a
-				console.log("a");
-				ball.position.x -= 0.1;
+				//console.log("a");
+				left = true;
+				//ball.position.x -= 0.1;
 				break;
 			case 83: // s
-				console.log("s");
-				ball.position.z += 0.1;
+				//console.log("s");
+				//ball.position.z += 0.1;
 				break;
 			case 68: // d
-				console.log("d");
-				ball.position.x += 0.1;
+				//console.log("d");
+				right = true;
+				//ball.position.x += 0.1;
 				break;
 		//case 38: // up
 		//case 37: // left
@@ -90,6 +104,31 @@ const Game = () => {
 		//break;
 		}
 	}
+
+	function _onKeyUp(e: any) {
+		switch (e.keyCode) {
+			case 87: // w
+				//console.log("w");
+				break;
+			case 65: // a
+				//console.log("a");
+				left = false;
+				break;
+			case 83: // s
+				//console.log("s");
+				break;
+			case 68: // d
+				//console.log("d");
+				right = false;
+				break;
+		//case 38: // up
+		//case 37: // left
+		//case 40: // down
+		//case 39: // right
+		//break;
+		}
+	}
+
 	function createPathStrings(filename: string) {
 		const basePath = "http://localhost:3000/assets/Skybox/";
 		const baseFilename = basePath + filename;
@@ -137,13 +176,41 @@ const Game = () => {
 	new GLTFLoader().load('http://localhost:3000/assets/models/Ship/scene.gltf', function ( gltf ) {
 		ship = gltf.scene;
 		ship.translateY(3);
-		ship.translateX(10);
+		ship.translateX(0);
+		ship.translateZ(55);
+		ship.rotateY(3.14);
 		ship.scale.set(0.6, 0.6, 0.6);
 		ship.traverse((c: any) => {
 			c.castShadow = true;
 		});
 		scene.add( ship );
 	} );
+
+	function updateShip() {
+		var speedShip: number = 0.5;
+		if (left)
+		{
+			ship.position.x -= speedShip;
+			cam.position.x -= speedShip;
+			if (ship.rotation.z * -1 < 3.34)
+				ship.rotation.z -= 0.1;
+		}
+		else if (right)
+		{
+			ship.position.x += speedShip;
+			cam.position.x += speedShip;
+			if (ship.rotation.z * -1 > 2.94)
+				ship.rotation.z += 0.1;
+		}
+		else
+		{
+			//if (ship.rotation.z > 3.145)
+			//	ship.rotation.z -= 0.1;
+			//else if (ship.rotation.z < 3.135)
+			//	ship.rotation.z += 0.1;
+			//console.log(ship.rotation.z);
+		}
+	};
 
 	/*function updateBall() {
 		if (ball.position.y <= 1)
@@ -187,6 +254,10 @@ const Game = () => {
 				ball.position.y -= 0.1;
 			//console.log(y + " " + ballState);
 		}
+		if (ship)
+		{
+			updateShip();
+		}
 		renderer.render(scene, cam);
 	};
 	function _OnWindowResize() {
@@ -201,6 +272,7 @@ const Game = () => {
 		window.addEventListener("beforeunload", function() {dispatch(updateUser(user.id, {online: false}));});
 		window.addEventListener('resize', () => { _OnWindowResize(); }, false);
 		document.addEventListener('keydown', (e) => _onKeyDown(e), false);
+		document.addEventListener('keyup', (e) => _onKeyUp(e), false);
 		console.log("game reload");
 		document.getElementById('game')?.appendChild(renderer.domElement);;
 		//renderer.setSize(document.getElementById('game')?.offsetWidth - 5, document.getElementById('game')?.offsetHeight - 5);
